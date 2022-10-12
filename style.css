@@ -1,0 +1,267 @@
+/* TODO(you): Write the CSS to finish the assignment! */
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Proxima Nova','Helvetica','Arial',sans-serif;
+    font-size: 18px;
+    color: #222222;
+}
+body{
+    margin: 0 auto;
+    width: 700px;
+}
+
+#course-name{
+    font-family: 'Helvetica',sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    color: #ee3322;
+}
+
+.stack-circle{
+    display: inline-flex;
+    
+    background: #ffee00;
+    border-radius: 100%;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    
+    transform: rotate(-30deg);
+    width: 50px;
+    height: 50px;
+    margin-left: 5px;
+}
+header .mern-stack{
+    list-style: none;
+    display: flex;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    height: 80px;
+}
+#quiz-name{
+    
+    background-image: url(images/background.jpg);
+    height: 425px;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+h2{
+    font-size: 26px;
+}
+
+#quiz-name h1{
+    background-color: rgba(255, 255, 255, 0.9);
+    max-width: 75%;
+    font-family: 'Pangolin','Trebuchet MS',cursive;
+    font-size: 60px;
+    color: black;
+    padding: 10px;
+    text-align: center;
+
+}
+#author{
+    font-size: 14px;
+    text-align: center;
+    margin: 18px 0;
+}
+.intro-title{
+    margin: 18px 0;
+}
+.intro-desc{
+    margin: 18px 0;
+}
+.score-title{
+    margin: 18px 0;
+}
+.score-desc{
+    margin: 36px 0;
+}
+#box-start{
+    
+    background-color: #f1f1f1;
+    border: 1px solid #dcdcdc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 18px 0;
+}
+.start-text{
+    margin: 18px 0 18px 0;
+}
+.goodluck-mess{
+    margin-bottom: 36px;
+}
+#btn-start{
+    padding: 18px;
+    background-color: #2196F3;
+    color: white;
+    
+}
+#btn-start:hover{
+    background-color: #0d8bf2;
+}
+.question-options{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+.question-index{
+    margin: 18px 0;
+}
+.question-text{
+    margin: 18px 0;
+}
+
+.question-options .option{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    margin-bottom: 1px;
+}
+
+.question-options .option input{
+    margin-left: 10px;
+    position: absolute;
+}
+ .question-options .option label:hover{
+    background-color: #ddd;
+} 
+
+.question-options .option label{
+    width: 100%; 
+    height: 100%;   
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+}
+
+.box-submit{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 120px;
+    background-color: #f1f1f1;
+    border:solid 1px #dcdcdc
+    
+}
+
+#btn-submit{
+    background-color: #4CAF50;
+    text-align: center;
+    font-family: 'Proxima Nova', 'Helvetica', 'Arial', sans-serif;
+    color: #f1f1f1;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    padding: 16px 10px;
+}
+#btn-submit{
+    background-color:  #46a049;
+}
+
+.option-selected{
+    background-color: #ddd;
+
+}
+article{
+    margin-bottom: 50px;
+}
+#box-result{
+    margin: 30px 0 30px 0;
+    background-color: #f1f1f1;
+    align-items: center;
+    text-align: center;
+    border: #dcdcdc 1px solid;
+    padding: 20px 0 20px 0;
+
+}
+#box-result h2{
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+#box-result p{
+    margin-bottom: 20px;
+}
+#btn-try-again{
+    background-color: #2196F3;
+    text-align: center;
+    border: none;
+    color: white;
+    padding:  20px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin-top: 10px;
+}
+.correctAns{
+    font-size: 24px;
+}
+
+#btn-try-again:hover{
+    background-color: #0d8bf2;
+}
+.correctPer{
+    font-weight: bold;
+}
+
+
+@media only screen and (max-width: 500px){
+    body{
+        width: 95%;
+    }
+    header .mern-stack{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 700px){
+    body{
+        width: 90%;
+    }
+    
+}  
+
+.box-check{
+    width: 150px;
+    position: absolute;
+    right: 32%;
+    padding: 5px;
+    background-color: rgba(0,0,0, 0.2);
+    color: white;
+    text-align: center;
+    
+}
+
+.correct-answer{
+    background-color: #d4edda !important;
+}
+.option-correct{
+background-color: #ddd !important;
+}
+.wrong-answer{
+background-color: #f8d7da !important;
+}
+
+.hidden{
+    display: none;
+}
+
+input:checked + label{
+    background-color: #ddd;
+}
+
+.noHover{
+    pointer-events: none;
+}
