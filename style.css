@@ -236,11 +236,12 @@ article{
 .box-check{
     width: 150px;
     position: absolute;
-    right: 32%;
-    padding: 5px;
+    right: 23%;
+    padding: 7px;
     background-color: rgba(0,0,0, 0.2);
     color: white;
     text-align: center;
+    font-size: 90%;
     
 }
 

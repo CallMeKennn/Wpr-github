@@ -9,9 +9,9 @@ const introduction = document.querySelector('#introduction');
 const attemptQuiz = document.querySelector('#attempt-quiz');
 const reviewQuiz = document.querySelector('#review-quiz')
 
+const boxSubmit = document.querySelector('.box-submit')
 
-
-const inputs = document.querySelectorAll('input')
+const article = document.querySelector('article')
 
 let idCode;
 let dataSubmit = {};
@@ -26,6 +26,8 @@ const startHTMLQuiz = () => {
     introduction.classList.add('hidden')
     attemptQuiz.classList.remove('hidden')
     boxSubmit.classList.remove('hidden')
+    attemptQuiz.scrollIntoView({behavior: "smooth", block: "start"})
+    reviewQuiz.remove()
 }
 
 const callAPI = async () => {
@@ -53,7 +55,7 @@ const createView = (questions) => {
             question.answers.forEach((answer, j) => {
                 element += '<div class="option">'
                     element += '<input type="radio" id="option' + (i + 1) + '-' + (j + 1) + '" name="' + question._id + '" value="option' + (j + 1) + '">'; 
-                    element += '<label for="option' + (i + 1) + '-' + (j + 1) + '" id="option' + (i + 1) + '_' + (j + 1) + '" name="' + question._id +'">' + htmlEntities(answer) + '</label>';
+                    element += '<label for="option' + (i + 1) + '-' + (j + 1) + '" id="option' + (i + 1) + '_' + (j + 1) + '" name="' + question._id + j +'">' + htmlEntities(answer) + '</label>';
                 element += '</div>'
             })
         element += '</div>'
@@ -68,9 +70,11 @@ const createView = (questions) => {
             element += '<p class="textComment">Practice more to improve it :D</p>'
             element += '<button id="btn-try-again">Try again</button>'
         element += '</div>' 
+
+
     }
 
-    const boxSubmit = document.querySelector('.box-submit')
+    
 }
 
 callAPI()
@@ -78,20 +82,24 @@ callAPI()
 buttonStartQuiz.addEventListener('click', startHTMLQuiz)
 
 const submitQuiz = async () => {
+    article.appendChild(reviewQuiz)
     reviewQuiz.classList.remove('hidden')
     attemptQuiz.classList.add('hidden')
     boxSubmit.classList.add('hidden')
     await answerForUser()
     attemptQuiz.remove()
+    boxSubmit.remove()
     await postSubmitQuiz()
-    checkAnswerForUser();
+    reviewQuiz.scrollIntoView({behavior: "smooth", block: "start"})
+
+    const buttonTryAgain = document.querySelector('#btn-try-again')
+    buttonTryAgain.addEventListener('click', tryAgainQuiz)
 }
 
 const answerForUser = () => {
     for (const question of questionList) {
         let answersInput = document.getElementsByName(question)
         answersInput.forEach((answerInput, index) => {
-            // answerInput.setAttribute('disabled', true)
             if(answerInput.checked){
                 dataSubmit[question] = index
             }
@@ -111,83 +119,79 @@ const postSubmitQuiz = async () => {
 
     });
     const myJson = await response.json();
-    // console.log(myJson);
 
     await createView(myJson.questions)
     reviewQuiz.innerHTML = element;
 
 
-    // console.log(dataSubmit);
-    // console.log(questionList);
-
+    const correctAnswers = myJson.correctAnswers
     
     for (const question in questionList) {
 
-        let labelsParent = document.getElementsByName(questionList[question])
         let inputsParent = document.getElementsByName(questionList[question])
         inputsParent.forEach((input, index) => {
+            let labelParent = document.getElementsByName(questionList[question] + index)
             input.setAttribute('disabled', true)
-            labelsParent[index].classList.add('noHover')
-        })
-        console.log(labelsParent);
-        console.log(inputsParent);
-        
+            labelParent[0].classList.add('noHover')
 
-        // break;
+            //Check answer
+            if (dataSubmit[questionList[question]] == correctAnswers[questionList[question]] && correctAnswers[questionList[question]] == index) {
+                input.checked = true;
+                labelParent[0].classList.add('correct-answer')
+                createBoxCheck(labelParent, 'Correct Answer')
+
+            } else if (dataSubmit[questionList[question]] != correctAnswers[questionList[question]] && correctAnswers[questionList[question]] == index) {
+                labelParent[0].classList.add('option-correct')
+                createBoxCheck(labelParent, 'Correct Answer')
+
+            } else if (dataSubmit[questionList[question]] == index) {
+                input.checked = true;
+                labelParent[0].classList.add('wrong-answer')
+                createBoxCheck(labelParent, 'Wrong Answer')
+            }
+        
+        })
+         
     }
 
+    let score = document.querySelector('.correctAns')
+    score.innerText = `${myJson.score}/10`
 
-        // //Loại bỏ hover
-    // let answerLabels = document.querySelectorAll('label')
-    // console.log(answerLabels);
-    // for (const answerLabel in answerLabels) {
-    //     answerLabels[answerLabel].classList.add('noHover')
-    // }
+    let percentScore = document.querySelector('.correctPer')
+    percentScore.innerText = `${myJson.score*10}%`
 
-    // for (const question of questionList) {
-    //     let answersInput = document.getElementsByName(question)
-    //     answersInput.forEach((answerInput, index) => {
-            
-    //     })
-    // }
-}
-
-
-const checkAnswerForUser = () => {
-    
+    let textComment = document.querySelector('.textComment')
+    textComment.innerText = myJson.scoreText
     
 }
 
-const compareAnswer = () => {
 
+const createBoxCheck = (labelParent, message) => {
+    let parent = labelParent[0].parentElement 
+    let boxCheck = document.createElement('span')
+
+    boxCheck.innerText = message
+    boxCheck.classList.add('box-check')
+
+    parent.appendChild(boxCheck)
+    
 }
+
 
 buttonSubmitQuiz.addEventListener('click', submitQuiz)
-
-
-
-
-
-
 
 
 
 const tryAgainQuiz = () => {
     introduction.classList.remove('hidden')
     reviewQuiz.classList.add('hidden')
-
-    for (const input of inputs) {
-        input.checked = false
+    article.appendChild(attemptQuiz)
+    article.appendChild(boxSubmit)
+    const inputs = document.querySelectorAll('input')
+    for (const input in inputs) {
+        inputs[input].checked = false
     }
 }
-
-// buttonTryAgain.addEventListener('click', tryAgainQuiz)
-
-
-
-
-
-
 
 
 const htmlEntities = (s) => {
