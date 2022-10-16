@@ -127,6 +127,7 @@ h2{
     align-items: center;
     background-color: #f1f1f1;
     margin-bottom: 1px;
+    position: relative;
 }
 
 .question-options .option input{
@@ -236,7 +237,7 @@ article{
 .box-check{
     width: 150px;
     position: absolute;
-    right: 23%;
+    right: 10px;
     padding: 7px;
     background-color: rgba(0,0,0, 0.2);
     color: white;
